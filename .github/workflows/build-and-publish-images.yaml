@@ -59,8 +59,8 @@ jobs:
 
     generate-sboms:
       name: Generate SBOMs
-           runs-on: ubuntu-latest
-    steps:
+      runs-on: ubuntu-latest
+      steps:
       - uses: anchore/sbom-action@v0.3.0
         with:
           image: yewnorosen/bbench:latest
