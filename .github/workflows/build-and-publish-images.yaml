@@ -1,7 +1,7 @@
 name: Build and publish bbench image
 on:
- release:
-   ['published']
+  release:
+    ['published']
 
 jobs:
   build-and-publish-images:
