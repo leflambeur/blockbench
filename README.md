@@ -37,16 +37,19 @@ Having completed [Setup](#Setup), these are the steps to deploy and load test a 
 cd ~/workspace
 
 bbench new -n 5 raft5 raft
+
 cd raft5
 
 docker-compose up -d
-docker-compose logs -f node1
-# watch the log for a bit to see that raft a peercount=4 in the logs
 
-# Run the load generation tool (from source for now)
+docker-compose logs -f node1
+
+# watch the log for a bit to see that raft a peercount=4 in the logs
+```
+Run the load generation tool (from source for now)
+```bash
 cd ../blockbench/go/loadtool
 go run main.go ethload -e http://127.0.0.1:8300/ -t 5 -a 3 --dbsource ~/workspace/raft5/raft5.db
-
 cd ~/workspace/raft5
 bbench jpycfg .
 bbench jpyrender .
