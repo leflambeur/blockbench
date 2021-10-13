@@ -64,11 +64,11 @@ jobs:
     steps:
       - uses: anchore/sbom-action@v0.3.0
         with:
-          image: yewnorosen/bbench:latest
+          image: yewnorosen/bbench:main
           format: cyclonedx
       - uses: anchore/sbom-action@v0.3.0
         with:
-          image: yewnorosen/bbench-loadtool:latest
+          image: yewnorosen/bbench-loadtool:main
           format: cyclonedx
 
   publish-sbom:
