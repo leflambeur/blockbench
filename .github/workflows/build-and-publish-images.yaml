@@ -59,6 +59,7 @@ jobs:
 
   generate-sboms:
     name: Generate SBOMs
+    needs: build-and-publish-images
     runs-on: ubuntu-latest
     steps:
       - uses: anchore/sbom-action@v0.3.0
@@ -72,6 +73,7 @@ jobs:
 
   publish-sbom:
     name: Publish SBOM to RKVST
+    needs: generate-sboms
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v2
