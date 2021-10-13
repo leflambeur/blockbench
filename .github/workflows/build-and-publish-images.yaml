@@ -2,7 +2,7 @@ name: Build and publish bbench image
 on:
  release:
    ['published']
-   
+
 jobs:
   build-and-publish-images:
     name: Build and publish bbench image
@@ -87,7 +87,7 @@ jobs:
         with:
           command: release
           asset_id: assets/fa8dc0a4-1136-4f65-b4db-946ea8ffde47
-          attachments: '["yewnorosen-bbench_latest.cyclonedx/yewnorosen-bbench_latest.cyclonedx"]'
+          attachments: '["yewnorosen-bbench_main.cyclonedx/yewnorosen-bbench_main.cyclonedx"]'
       - uses: leflambeur/rkvst-sbom@v0.0.2
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
@@ -95,5 +95,5 @@ jobs:
         with:
           command: release
           asset_id: assets/cb3a1190-34b3-4ecc-9228-95138b2747bf
-          attachments: '["yewnorosen-bbench-loadtool_latest.cyclonedx/yewnorosen-bbench-loadtool_latest.cyclonedx"]'
+          attachments: '["yewnorosen-bbench-loadtool_main.cyclonedx/yewnorosen-bbench-loadtool_main.cyclonedx"]'
       
