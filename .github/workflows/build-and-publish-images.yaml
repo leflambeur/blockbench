@@ -10,8 +10,8 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v1
         with:
-          username: robinbryce
-          password: ${{ secrets.ROBINBRYCE_DOCKERHUB_PUSH }}
+          username: yewnorosen
+          password: ${{ secrets.YEWNOROSEN_DOCKERHUB_PUSH }}
       -
         name: checkout main
         uses: actions/checkout@v2
@@ -22,7 +22,7 @@ jobs:
         id: bbench-meta
         uses: docker/metadata-action@v3
         with:
-          images: robinbryce/bbench
+          images: yewnorosen/bbench
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -41,7 +41,7 @@ jobs:
         id: loadtool-meta
         uses: docker/metadata-action@v3
         with:
-          images: robinbryce/bbench-loadtool
+          images: yewnorosen/bbench-loadtool
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -56,3 +56,39 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.loadtool-meta.outputs.tags }}
           labels: ${{ steps.loadtool-meta.outputs.labels }}
+
+    generate-sboms:
+      name: Generate SBOMs
+           runs-on: ubuntu-latest
+    steps:
+      - uses: anchore/sbom-action@v0.3.0
+        with:
+          image: yewnorosen/bbench:latest
+          format: cyclonedx
+      - uses: anchore/sbom-action@v0.3.0
+        with:
+          image: yewnorosen/bbench-loadtool:latest
+          format: cyclonedx
+
+    publish-sbom:
+      name: Publish SBOM to RKVST
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/download-artifact@v2
+        - uses: leflambeur/rkvst-sbom@v0.0.2
+          env:
+            CLIENT_ID: ${{ secrets.CLIENT_ID }}
+            CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          with:
+            command: release
+            asset_id: assets/fa8dc0a4-1136-4f65-b4db-946ea8ffde47
+            attachments: '["yewnorosen-bbench_latest.cyclonedx/yewnorosen-bbench_latest.cyclonedx"]'
+        - uses: leflambeur/rkvst-sbom@v0.0.2
+          env:
+            CLIENT_ID: ${{ secrets.CLIENT_ID }}
+            CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          with:
+            command: release
+            asset_id: assets/cb3a1190-34b3-4ecc-9228-95138b2747bf
+            attachments: '["yewnorosen-bbench-loadtool_latest.cyclonedx/yewnorosen-bbench-loadtool_latest.cyclonedx"]'
+      
