@@ -96,4 +96,6 @@ jobs:
           command: release
           asset_id: assets/cb3a1190-34b3-4ecc-9228-95138b2747bf
           attachments: '["yewnorosen-bbench-loadtool_main.cyclonedx/yewnorosen-bbench-loadtool_main.cyclonedx"]'
-      
+          attrs: '{"name": "${{ github.repository }}-load", "description": "${{ github.event.release.tag_name }} - ${{ github.repository }}", "hash": "${{ github.sha }}", "version": "${{ github.event.release.tag_name }}", "author": "${{ github.actor }}", "supplier": "${{ github.repository_owner }}", "uuid": "${{ github.repository }}-load"}'
+          latest-sbom: '{"name": "${{ github.repository }}-load", "description": "${{ github.event.release.tag_name }} - ${{ github.repository }}", "hash": "${{ github.sha }}", "version": "${{ github.event.release.tag_name }}", "author": "${{ github.actor }}", "supplier": "${{ github.repository_owner }}", "uuid": "${{ github.repository }}-load"}'
+
